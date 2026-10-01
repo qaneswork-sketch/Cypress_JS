@@ -23,3 +23,33 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+
+Cypress.Commands.add('login', (email, password) => {
+        //cy.visit(Cypress.env('CYPRESS_BASE_URL'));
+        //cy.visit('https://guest:welcome2qauto@qauto.forstudy.space');
+        cy.visit('/')
+    
+        cy.get('button')
+        .contains('Sign In')
+        .should('be.visible')
+        .click();
+
+        cy.get('.modal-title')
+        .contains('Log in')
+        .should('be.visible');
+
+        cy.get('input[name="email"]').type(email);
+        cy.get('input[name="password"]').type(password, {sensitive: true});
+
+        cy.get('button')
+        .contains('Login')
+        .should('be.visible')
+        .click();
+
+        cy.url().should('include', '/panel/garage');
+        cy.get('button')
+        .contains('Add car')
+        .should('be.visible');
+    
+});
